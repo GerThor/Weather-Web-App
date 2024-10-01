@@ -3,7 +3,7 @@
 REM Check if a virtual environment directory exists, if not, create it
 if not exist "venv" (
     echo Creating virtual environment...
-    python -m venv venv
+    py -3 -m venv venv
 )
 
 REM Activate the virtual environment
