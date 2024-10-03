@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    
+    <!-- Input for the user to specify a city -->
+    <input type="text" id="cityInput" placeholder="Enter city" />
+
+    <!-- Input for the user to specify a state -->
+    <input type="text" id="stateInput" placeholder="Enter state" />
+
+    <!-- Button to trigger the data fetching -->
+    <button id="getDataBtn">Get Weather Data</button>
+
+    <!-- Area where the response will be displayed -->
+    <div id="responseData"></div>
+
+    <!-- Reference to the external JavaScript file (weatherapp.js in static directory) -->
+    <script src="../static/weatherapp.js"></script>
+</body>
+</html>
