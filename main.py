@@ -20,26 +20,13 @@ def get_data():
     city_input = request.args.get('city', 'unknown city')
     state_input = request.args.get('state', 'unknown state')
 
+    weather_object = Weather(city=city_input, state_code=state_input)
 
-    """
-     TODO:  This method will call the method you create that makes the API call.
-            The response from the API should map to an object (create it based on the response)
-            so that we can serialize it to a json
-    """
-    weather_object = Weather(city_input)
+    weather_object.initialize_coordinates()
 
-    weather_object.state_code_convert(state_input) # Returns True or False
-    # TO DO: Error Handling, based on return value True or False
+    weather_object.initialize_weather_data()
 
-    weather_object.get_coordinates(city_input) # Returns True or False
-    # TO DO: Error Handling, based on return value True or False
-
-    weather_object.get_weather_data() # Returns True or False
-    # TO DO: Error Handling, based on return value True or False.
-    # Then display the weather data on website, we can get temperature and weather description, there is already output of these two values in the output terminal
-
-
-    return jsonify({"message": f"You sent: City - {weather_object.city}, State - {weather_object.state}"})
+    return jsonify({"weather":weather_object.to_dict()})
 
 
 
