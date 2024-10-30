@@ -85,3 +85,21 @@ class Weather:
             'weather_temperature': self.weather_temperate
             # 'weather_data': self.weather_data  # You may want to serialize this as well
         }
+
+    #convert the json property weather data form the repsonse to an object
+    @staticmethod
+    def parse_weather_data_json(json_data: dict) -> WeatherData:
+        weather = [Weather(**w) for w in json_data['weather']]
+        sys_data = Sys(**json_data['sys'])
+
+        return WeatherData(
+            weather=weather,
+            base=json_data['base'],
+            visibility=json_data['visibility'],
+            dt=json_data['dt'],
+            sys=sys_data,
+            timezone=json_data['timezone'],
+            id=json_data['id'],
+            name=json_data['name'],
+            cod=json_data['cod']
+        )
