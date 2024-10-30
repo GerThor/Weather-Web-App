@@ -1,6 +1,9 @@
 import requests
+import json
+from weather_app.weather_data import WeatherData, Weather, Sys
 
-class Weather:
+
+class OpenWeatherMap:
     def __init__(self, city= '', state= '', state_code= '', country= 'US', api_key = 'bd3844093fc57703b2cc41751e23f944', longitude = 0, latitude = 0, weather_data = {}, weather_condition = '', weather_temperature = 0):
         self.city = ''
         self.state = ''
@@ -167,13 +170,30 @@ class Weather:
 
         if weather_response.status_code == 200:
             print("Weather_response status was successful")
-            self.weather_data = weather_response.json()
+            self.weather_data = OpenWeatherMap.parse_weather_data_json(weather_response.json())
             print(self.weather_data)
 
             # print(f"Weather main in ", city_input_formatted, ": ", weather_data['weather'][0]['main'], sep='')  // This gives main weather, but weather description provides better weather info
-            print(f"Weather description in ", self.city, ": ", self.weather_data['weather'][0]['description'], sep='')
-            print(f"Temperature in ", self.city, ": ", self.weather_data['main']['temp'], " fahrenheit", sep='')
+            print(f"Weather description in ", self.city, ": ", self.weather_data.weather[0].description, sep='')
+
             return True
         else:
             print("Weather_response status failed with code:", weather_response.status_code) #Currently failing with Error 401, meaning unauthorized 
             return False
+
+    @staticmethod
+    def parse_weather_data_json(json_data: dict) -> WeatherData:
+        weather = [Weather(**w) for w in json_data['weather']]
+        sys_data = Sys(**json_data['sys'])
+
+        return WeatherData(
+            weather=weather,
+            base=json_data['base'],
+            visibility=json_data['visibility'],
+            dt=json_data['dt'],
+            sys=sys_data,
+            timezone=json_data['timezone'],
+            id=json_data['id'],
+            name=json_data['name'],
+            cod=json_data['cod']
+        )

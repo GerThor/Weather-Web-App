@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-from weather_app.weather import Weather
+from weather_app.openweathermap import OpenWeatherMap
 
 # Create a Flask application instance
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def get_data():
             The response from the API should map to an object (create it based on the response)
             so that we can serialize it to a json
     """
-    weather_object = Weather(city_input)
+    weather_object = OpenWeatherMap(city_input)
 
     weather_object.state_code_convert(state_input) # Returns True or False
     # TO DO: Error Handling, based on return value True or False
@@ -39,7 +39,7 @@ def get_data():
     # Then display the weather data on website, we can get temperature and weather description, there is already output of these two values in the output terminal
 
 
-    return jsonify({"message": f"You sent: City - {weather_object.city}, State - {weather_object.state}"})
+    return jsonify({"message": f"You sent: City - {weather_object.city}, State - {weather_object.state}, weather - {weather_object.weather_data.weather[0].description}"})
 
 
 
