@@ -13,7 +13,7 @@ class Weather:
         self.latitude = 0
         self.weather_data = {}
         self.weather_condition = ''  # This is the info/variable you want if you want to display
-        self.weather_temperate = 0  # This is the info/variable you want if you want to display 
+        self.weather_temperate = 0  # This is the info/variable you want if you want to display
 
 
     # Function to obtain geo coordinates for a specific city in the US, returns a dictionary containing the longitude and latitude
@@ -60,12 +60,12 @@ class Weather:
 
         if weather_response.status_code == 200:
             print("Weather_response status was successful")
-            self.weather_data = weather_response.json()
+            self.weather_data = OpenWeatherMap.parse_weather_data_json(weather_response.json())
             print(self.weather_data)
 
             # print(f"Weather main in ", city_input_formatted, ": ", weather_data['weather'][0]['main'], sep='')  // This gives main weather, but weather description provides better weather info
-            print(f"Weather description in ", self.city, ": ", self.weather_data['weather'][0]['description'], sep='')
-            print(f"Temperature in ", self.city, ": ", self.weather_data['main']['temp'], " fahrenheit", sep='')
+            print(f"Weather description in ", self.city, ": ", self.weather_data.weather[0].description, sep='')
+
             return True
         else:
             print("Weather_response status failed with code:",

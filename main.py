@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-from weather_app.weather import Weather
+from weather_app.openweathermap import OpenWeatherMap
 
 # Create a Flask application instance
 app = Flask(__name__)
