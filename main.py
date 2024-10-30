@@ -20,7 +20,7 @@ def get_data():
     city_input = request.args.get('city', 'unknown city')
     state_input = request.args.get('state', 'unknown state')
 
-    weather_object = Weather(city=city_input, state_code=state_input)
+    weather_object = OpenWeatherMap(city=city_input, state_code=state_input)
 
     weather_object.initialize_coordinates()
 

@@ -1,7 +1,9 @@
 import requests
 from weather_app.utils import get_state_name
+from weather_app.weather_data import WeatherData, Weather, Sys
 
-class Weather:
+
+class OpenWeatherMap:
     def __init__(self, city='', state='', state_code='', country='US', api_key='bd3844093fc57703b2cc41751e23f944',
                  longitude=0, latitude=0, weather_data={}, weather_condition='', weather_temperature=0):
         self.city = city
@@ -15,13 +17,14 @@ class Weather:
         self.weather_condition = ''  # This is the info/variable you want if you want to display
         self.weather_temperate = 0  # This is the info/variable you want if you want to display
 
-
-    # Function to obtain geo coordinates for a specific city in the US, returns a dictionary containing the longitude and latitude
+    # Function to obtain geo coordinates for a specific city in the US, returns a dictionary containing the longitude
+    # and latitude
     def initialize_coordinates(self):
 
-        # Converted Geo Coordinates to names API Call example
-        # http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-        # Must use q=city,state_code,country_code or else you will get an object containing too many different Dallas location data and it will be messy to extract the correct coordinates
+        # Converted Geo Coordinates to names API Call example http://api.openweathermap.org/geo/1.0/direct?q={city
+        # name},{state code},{country code}&limit={limit}&appid={API key} Must use q=city,state_code,country_code or
+        # else you will get an object containing too many different Dallas location data and it will be messy to
+        # extract the correct coordinates
 
         response = requests.get(
             f"http://api.openweathermap.org/geo/1.0/direct?q={self.city},{self.state_code},{self.country}&limit=5&appid={self.api_key}")
@@ -86,7 +89,7 @@ class Weather:
             # 'weather_data': self.weather_data  # You may want to serialize this as well
         }
 
-    #convert the json property weather data form the repsonse to an object
+    # convert the json property weather data form the repsonse to an object
     @staticmethod
     def parse_weather_data_json(json_data: dict) -> WeatherData:
         weather = [Weather(**w) for w in json_data['weather']]
