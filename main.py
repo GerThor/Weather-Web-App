@@ -1,5 +1,9 @@
 from flask import Flask, jsonify, request, render_template
 from weather_app.openweathermap import OpenWeatherMap
+from dotenv import load_dotenv
+import os
+
+
 
 # Create a Flask application instance
 app = Flask(__name__)
@@ -16,11 +20,13 @@ def home():
 """
 @app.route('/api/GetWeatherData', methods=['GET'])
 def get_data():
+    load_dotenv()
+    API_KEY = os.getenv('API_KEY')
     # Extract city and state parameters from the request
     city_input = request.args.get('city', 'unknown city')
     state_input = request.args.get('state', 'unknown state')
 
-    weather_object = OpenWeatherMap(city=city_input, state_code=state_input)
+    weather_object = OpenWeatherMap(city=city_input, state_code=state_input, api_key=API_KEY)
 
     weather_object.initialize_coordinates()
 

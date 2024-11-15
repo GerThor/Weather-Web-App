@@ -1,11 +1,12 @@
 import requests
 from weather_app.utils import get_state_name
 from weather_app.weather_data import WeatherData, Weather, Sys
-from weather_app.api import API_KEY
+
+
 
 
 class OpenWeatherMap:
-    def __init__(self, city='', state='', state_code='', country='US', api_key=API_KEY,
+    def __init__(self, city='', state='', state_code='', country='US', api_key='',
                  longitude=0, latitude=0, weather_data={}, weather_condition='', weather_temperature=0):
         self.city = city
         self.state = get_state_name(state_code)
