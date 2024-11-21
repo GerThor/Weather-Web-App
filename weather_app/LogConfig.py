@@ -31,4 +31,6 @@ LOGGING_CONFIG = {
     },
 }
 
-
+def configure_logging():
+    """Apply the logging configuration."""
+    logging.config.dictConfig(LOGGING_CONFIG)

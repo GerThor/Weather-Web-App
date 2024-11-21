@@ -1,12 +1,12 @@
 # main.py
 import requests
 import logging
-from LogConfig import LOGGING_CONFIG
+from weather_app.LogConfig import configure_logging
 from weather_app.utils import get_state_name
 from weather_app.weather_data import WeatherData, Weather, Sys
 
 # Configure logging from LogConfig
-LOGGING_CONFIG()
+configure_logging()
 logger = logging.getLogger(__name__)
 
 class OpenWeatherMap:
