@@ -1,6 +1,6 @@
 import requests
 from weather_app.utils import get_state_name
-from weather_app.weather_data import WeatherData, Weather, Sys
+from weather_app.weather_data import WeatherData, Weather, Sys, Main
 
 
 
@@ -17,7 +17,8 @@ class OpenWeatherMap:
         self.latitude = 0
         self.weather_data = {}
         self.weather_condition = ''  # This is the info/variable you want if you want to display
-        self.weather_temperate = 0  # This is the info/variable you want if you want to display
+        self.weather_temperature = 0  # This is the info/variable you want if you want to display
+        # TO DO add humidity and pressure
 
     # Function to obtain geo coordinates for a specific city in the US, returns a dictionary containing the longitude
     # and latitude
@@ -70,6 +71,10 @@ class OpenWeatherMap:
 
             # print(f"Weather main in ", city_input_formatted, ": ", weather_data['weather'][0]['main'], sep='')  // This gives main weather, but weather description provides better weather info
             print(f"Weather description in ", self.city, ": ", self.weather_data.weather[0].description, sep='')
+            self.weather_condition = self.weather_data.weather[0].description
+
+            print(f"main Temperature in ", self.city, ": ", self.weather_data.main.temp, sep= '')
+            self.weather_temperature = self.weather_data.main.temp
 
             return True
         else:
@@ -87,7 +92,7 @@ class OpenWeatherMap:
             'longitude': self.longitude,
             'latitude': self.latitude,
             'weather_condition': self.weather_condition,
-            'weather_temperature': self.weather_temperate
+            'weather_temperature': self.weather_temperature
             # 'weather_data': self.weather_data  # You may want to serialize this as well
         }
 
@@ -96,10 +101,12 @@ class OpenWeatherMap:
     def parse_weather_data_json(json_data: dict) -> WeatherData:
         weather = [Weather(**w) for w in json_data['weather']]
         sys_data = Sys(**json_data['sys'])
+        main = Main(**json_data['main'])
 
         return WeatherData(
             weather=weather,
             base=json_data['base'],
+            main=main,
             visibility=json_data['visibility'],
             dt=json_data['dt'],
             sys=sys_data,
