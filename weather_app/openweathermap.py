@@ -7,7 +7,8 @@ from weather_app.weather_data import WeatherData, Weather, Sys, Main
 
 class OpenWeatherMap:
     def __init__(self, city='', state='', state_code='', country='US', api_key='',
-                 longitude=0, latitude=0, weather_data={}, weather_condition='', weather_temperature=0):
+                 longitude=0, latitude=0, weather_data={}, weather_condition='', weather_temperature=0,
+                 weather_temperature_max=0, weather_temperature_min=0, weather_humidity=0, weather_pressure=0):
         self.city = city
         self.state = get_state_name(state_code)
         self.state_code = state_code
@@ -18,7 +19,11 @@ class OpenWeatherMap:
         self.weather_data = {}
         self.weather_condition = ''  # This is the info/variable you want if you want to display
         self.weather_temperature = 0  # This is the info/variable you want if you want to display
-        # TO DO add humidity and pressure
+        self.weather_temperature_max = 0 # an integer, TO DO: Display on front-end
+        self.weather_temperature_min = 0 # an integer, TO DO: Display on front-end
+        self.weather_humidity = 0 # an integer, TO DO: Display on front-end
+        self.weather_pressure = 0 # an integer, TO DO: Display on front-end
+
 
     # Function to obtain geo coordinates for a specific city in the US, returns a dictionary containing the longitude
     # and latitude
@@ -75,6 +80,18 @@ class OpenWeatherMap:
 
             print(f"main Temperature in ", self.city, ": ", self.weather_data.main.temp, sep= '')
             self.weather_temperature = self.weather_data.main.temp
+
+            print(f"max Temperature in ", self.city, ": ", self.weather_data.main.temp_max, sep= '')
+            self.weather_temperature_max = self.weather_data.main.temp_max
+
+            print(f"minimum Temperature in ", self.city, ": ", self.weather_data.main.temp_min, sep= '')   
+            self.weather_temperature_min = self.weather_data.main.temp_min
+
+            print(f"Humidity in ", self.city, ": ", self.weather_data.main.humidity, sep= '')   
+            self.weather_humidity = self.weather_data.main.humidity
+
+            print(f"Pressure in ", self.city, ": ", self.weather_data.main.temp_min, sep= '')   
+            self.weather_pressure = self.weather_data.main.pressure
 
             return True
         else:
